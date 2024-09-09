@@ -1,9 +1,7 @@
 "use client";
-import { signOut } from "@/auth";
-import { useCurrentUser } from "@/hooks/use-current-user";
 
 const DashboardPage = () => {
-  return <div>Test</div>;
+  return <div className="px-10 py-2">Test</div>;
 };
 
 export default DashboardPage;

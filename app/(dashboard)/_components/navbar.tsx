@@ -1,9 +1,9 @@
 "use client";
-import { NavbarRoutes } from "@/app/(root)/_components/navbar-routes";
 import { usePathname, useRouter } from "next/navigation";
 import { MobileSidebar } from "./mobile-sidebar";
 import { Button } from "@/components/ui/button";
-import { UserButton } from "@/components/auth/user-button";
+import { UserButton } from "@clerk/nextjs";
+import { DotIcon } from "lucide-react";
 
 export const NavBar = () => {
   const pathname = usePathname();
@@ -27,7 +27,13 @@ export const NavBar = () => {
         >
           {isCashier ? "Dashboard" : "Cashier Mode"}
         </Button>
-        <UserButton />
+        <UserButton>
+          <UserButton.Action
+            label="Open chat"
+            labelIcon={<DotIcon />}
+            onClick={() => alert("init chat")}
+          />
+        </UserButton>
       </div>
     </div>
   );
