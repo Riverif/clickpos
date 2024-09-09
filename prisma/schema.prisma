@@ -1,0 +1,111 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Store {
+  id     String @id @default(cuid())
+  name   String
+  userId String
+
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  ProductCategory ProductCategory[]
+  Order           Order[]
+}
+
+model Product {
+  id                String          @id @default(cuid())
+  name              String
+  imageUrl          String
+  productCategoryId String
+  productCategory   ProductCategory @relation(fields: [productCategoryId], references: [id])
+
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  ProductItem ProductItem[]
+}
+
+model ProductItem {
+  id        String @id @default(cuid())
+  productId String
+  sku       String
+  imageUrl  String
+  price     Float
+
+  product Product @relation(fields: [productId], references: [id])
+
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  ProductConfiguration ProductConfiguration[]
+  OrderItem            OrderItem[]
+}
+
+model ProductCategory {
+  id             String  @id @default(cuid())
+  name           String
+  parentCategory String?
+  storeId        String
+  stores         Store   @relation(fields: [storeId], references: [id])
+
+  Product   Product[]
+  Variation Variation[]
+}
+
+model Variation {
+  id                String            @id @default(cuid())
+  name              String
+  productCategoryId String
+  productCategory   ProductCategory   @relation(fields: [productCategoryId], references: [id])
+  VariationOption   VariationOption[]
+}
+
+model VariationOption {
+  id                   String                 @id @default(cuid())
+  name                 String
+  variationId          String
+  variation            Variation              @relation(fields: [variationId], references: [id])
+  ProductConfiguration ProductConfiguration[]
+}
+
+model ProductConfiguration {
+  id                String @id @default(cuid())
+  productItemId     String
+  variationOptionId String
+
+  productItem     ProductItem     @relation(fields: [productItemId], references: [id])
+  variationOption VariationOption @relation(fields: [variationOptionId], references: [id])
+}
+
+model Order {
+  id         String @id @default(cuid())
+  totalPrice Float
+  storeId    String
+
+  store Store @relation(fields: [storeId], references: [id])
+
+  createdAt DateTime    @default(now())
+  OrderItem OrderItem[]
+}
+
+model OrderItem {
+  id            String @id @default(cuid())
+  qty           Int
+  orderId       String
+  productItemId String
+
+  order       Order       @relation(fields: [orderId], references: [id])
+  productItem ProductItem @relation(fields: [productItemId], references: [id])
+
+  createdAt DateTime @default(now())
+}
