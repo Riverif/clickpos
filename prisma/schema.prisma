@@ -18,10 +18,19 @@ model Store {
   name   String
   userId String
 
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  ProductCategory ProductCategory[]
-  Order           Order[]
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  ProductCategory  ProductCategory[]
+  Order            Order[]
+  StoreCollaborate StoreCollaborate[]
+}
+
+model StoreCollaborate {
+  id      String @id @default(cuid())
+  storeId String
+  userId  String
+
+  store Store @relation(fields: [storeId], references: [id])
 }
 
 model Product {

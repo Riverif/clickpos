@@ -3,9 +3,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { MobileSidebar } from "./mobile-sidebar";
 import { Button } from "@/components/ui/button";
 import { UserButton } from "@clerk/nextjs";
-import { DotIcon } from "lucide-react";
 
-export const NavBar = () => {
+export const NavBar = ({ storeId }: { storeId: string }) => {
   const pathname = usePathname();
   const router = useRouter();
   const label = pathname.split("/")[1];
@@ -14,7 +13,7 @@ export const NavBar = () => {
   return (
     <div className="flex w-full items-center justify-between px-10">
       <div className="flex items-center gap-x-4">
-        <MobileSidebar />
+        <MobileSidebar storeId={storeId} />
         <h2 className="text-2xl font-semibold capitalize">{label}</h2>
       </div>
       <div className="flex items-center gap-x-4">
@@ -27,13 +26,7 @@ export const NavBar = () => {
         >
           {isCashier ? "Dashboard" : "Cashier Mode"}
         </Button>
-        <UserButton>
-          <UserButton.Action
-            label="Open chat"
-            labelIcon={<DotIcon />}
-            onClick={() => alert("init chat")}
-          />
-        </UserButton>
+        <UserButton />
       </div>
     </div>
   );

@@ -19,7 +19,7 @@ export const SidebarItem = ({ label, href }: SidebarItemProps) => {
       onClick={onClick}
       type="button"
       className={cn(
-        "flex items-start border-b p-2 font-medium transition hover:bg-[#6A9C89]/40 rounded-r-full",
+        "flex items-start p-2 font-medium transition hover:bg-[#6A9C89]/40 rounded-r-full",
         isActive && "bg-[#6A9C89] text-white hover:bg-[#6A9C89] drop-shadow-md",
       )}
     >
