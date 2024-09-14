@@ -11,15 +11,15 @@ export const NavBar = ({ storeId }: { storeId: string }) => {
   const isCashier = pathname.startsWith("/cashier");
 
   return (
-    <div className="flex w-full items-center justify-between px-10">
+    <div className="flex w-full items-center justify-between px-4 md:px-10">
       <div className="flex items-center gap-x-4">
         <MobileSidebar storeId={storeId} />
         <h2 className="text-2xl font-semibold capitalize">{label}</h2>
       </div>
       <div className="flex items-center gap-x-4">
         <Button
-          variant="outline"
-          className="rounded-none border-2 border-black hover:bg-[#CD5C08] hover:text-white"
+          variant="secondary"
+          className=""
           onClick={() =>
             isCashier ? router.push("/dashboard") : router.push("/cashier")
           }

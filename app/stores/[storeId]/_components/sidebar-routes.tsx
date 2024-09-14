@@ -7,6 +7,10 @@ export const SidebarRoutes = ({ storeId }: { storeId: string }) => {
       href: `/stores/${storeId}/dashboard`,
     },
     {
+      label: "Categories",
+      href: `/stores/${storeId}/categories`,
+    },
+    {
       label: "Products",
       href: `/stores/${storeId}/products`,
     },
